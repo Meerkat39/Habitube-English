@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Listen Demo (Calendar)</title>
+    <style>
+      /* ベースとなる色とフォントを定義 */
+      :root {
+        --primary-color: #5c65c0;
+        --accent-color: #ff7e67;
+        --bg-color: #f7f9fc;
+        --card-bg-color: #ffffff;
+        --text-color: #3d3d3d;
+        --light-text-color: #888;
+        --border-radius: 15px;
+        --font-family: 'Poppins', sans-serif;
+      }
+
+      body {
+        font-family: var(--font-family);
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: var(--card-bg-color);
+        border-radius: var(--border-radius);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+        text-align: center;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--primary-color);
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin: 0;
+        color: var(--primary-color);
+      }
+
+      .calendar-container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f0f2f5;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .calendar-header h2 {
+        font-size: 1.5em;
+        font-weight: 600;
+        margin: 0;
+        color: var(--primary-color);
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        text-align: center;
+      }
+
+      .calendar-day-label {
+        font-size: 0.9em;
+        font-weight: 600;
+        color: #999;
+        padding: 5px 0;
+      }
+
+      .calendar-day {
+        background-color: #fff;
+        padding: 10px 0;
+        border-radius: 5px;
+        position: relative;
+      }
+
+      .calendar-day.achieved {
+        background-color: #d1e7d1;
+        /* 達成した日の色 */
+        font-weight: bold;
+      }
+
+      .calendar-day.today {
+        border: 2px solid var(--accent-color);
+        box-shadow: 0 0 5px rgba(255, 126, 103, 0.5);
+      }
+
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+      }
+
+      .video-card {
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        background-color: #f0f2f5;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .video-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      .video-thumbnail {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .video-info {
+        padding: 15px;
+      }
+
+      .video-info h3 {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin: 0 0 5px 0;
+        color: var(--primary-color);
+      }
+
+      .video-info p {
+        font-size: 0.95em;
+        color: var(--light-text-color);
+        margin: 0;
+      }
+
+      @media (max-width: 1024px) {
+        .video-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .video-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <header class="header">
+        <h1>Daily Listen</h1>
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <button>&lt;</button>
+            <h2>2025年8月</h2>
+            <button>&gt;</button>
+          </div>
+          <div class="calendar-grid">
+            <span class="calendar-day-label">日</span>
+            <span class="calendar-day-label">月</span>
+            <span class="calendar-day-label">火</span>
+            <span class="calendar-day-label">水</span>
+            <span class="calendar-day-label">木</span>
+            <span class="calendar-day-label">金</span>
+            <span class="calendar-day-label">土</span>
+            <div class="calendar-day"></div>
+            <div class="calendar-day">1</div>
+            <div class="calendar-day">2</div>
+            <div class="calendar-day today">3</div>
+            <div class="calendar-day achieved">4</div>
+            <div class="calendar-day achieved">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day">14</div>
+            <div class="calendar-day">15</div>
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day">18</div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day">21</div>
+            <div class="calendar-day">22</div>
+            <div class="calendar-day">23</div>
+            <div class="calendar-day">24</div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day">28</div>
+            <div class="calendar-day">29</div>
+            <div class="calendar-day">30</div>
+            <div class="calendar-day">31</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <div class="video-grid">
+          <a href="#" class="video-card">
+            <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="動画のサムネイル" class="video-thumbnail">
+            <div class="video-info">
+              <h3>Daily English Practice - For Beginners</h3>
+              <p>English with Lucy</p>
+            </div>
+          </a>
+          <a href="#" class="video-card">
+            <img src="https://i.ytimg.com/vi/W7-wR2e9T7Y/hqdefault.jpg" alt="動画のサムネイル" class="video-thumbnail">
+            <div class="video-info">
+              <h3>Improve your English Listening Skills</h3>
+              <p>BBC Learning English</p>
+            </div>
+          </a>
+          <a href="#" class="video-card">
+            <img src="https://i.ytimg.com/vi/9bZkp7q19f0/hqdefault.jpg" alt="動画のサムネイル" class="video-thumbnail">
+            <div class="video-info">
+              <h3>A Day in the Life of a New York Artist</h3>
+              <p>The Art of Life</p>
+            </div>
+          </a>
+          <a href="#" class="video-card">
+            <img src="https://i.ytimg.com/vi/C-j-l1S9W-I/hqdefault.jpg" alt="動画のサムネイル" class="video-thumbnail">
+            <div class="video-info">
+              <h3>Top 10 Cities to Visit in 2025</h3>
+              <p>Travel with Me</p>
+            </div>
+          </a>
+          <a href="#" class="video-card">
+            <img src="https://i.ytimg.com/vi/fB8v3vJb4Ww/hqdefault.jpg" alt="動画のサムネイル" class="video-thumbnail">
+            <div class="video-info">
+              <h3>Cooking Simple Dishes in English</h3>
+              <p>Cooking with Tom</p>
+            </div>
+          </a>
+          <a href="#" class="video-card">
+            <img src="https://i.ytimg.com/vi/N6wUv_3oGqE/hqdefault.jpg" alt="動画のサムネイル" class="video-thumbnail">
+            <div class="video-info">
+              <h3>Relaxing Jazz Music for Work</h3>
+              <p>Jazz & Blues Club</p>
+            </div>
+          </a>
+          <a href="#" class="video-card">
+            <img src="https://i.ytimg.com/vi/LpGg19vF04Y/hqdefault.jpg" alt="動画のサムネイル" class="video-thumbnail">
+            <div class="video-info">
+              <h3>Coding Fundamentals: The Ultimate Guide</h3>
+              <p>Code Master</p>
+            </div>
+          </a>
+          <a href="#" class="video-card">
+            <img src="https://i.ytimg.com/vi/J_7n8hVp4xI/hqdefault.jpg" alt="動画のサムネイル" class="video-thumbnail">
+            <div class="video-info">
+              <h3>Why You Should Learn a New Language</h3>
+              <p>Learn with Lily</p>
+            </div>
+          </a>
+        </div>
+      </main>
+    </div>
+
+  </body>
+
+</html>
