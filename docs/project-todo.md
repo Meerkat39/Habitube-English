@@ -8,12 +8,10 @@
 
 ### 1. ホーム画面：YouTube 動画表示
 
-#### 1-1. データ取得・管理
-
-- [ ] お気に入りチャンネル ID の選定・管理（ハードコーディング）
-- [ ] YouTube Data API キー取得・.env 保存
-- [ ] YouTube API 連携（fetch 関数・エンドポイント設計）
-- [ ] 最新動画 5 件の抽出ロジック
+- [x] お気に入りチャンネル ID の選定・管理（ハードコーディング）→ 完了（Google Developers 公式 ID で仮運用中）
+- [x] YouTube Data API キー取得・.env 保存　 → 完了（API キー取得・.env 設定済み）
+- [x] YouTube API 連携（fetch 関数・エンドポイント設計）→ 完了（API Route で GET 成功）
+- [x] 最新動画 5 件の抽出ロジック　 → 完了（API で 5 件取得）
 
 #### 1-2. UI 設計・実装
 
