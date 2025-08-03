@@ -4,29 +4,44 @@
 
 ```
 habitube-english/
-├── src/                        # アプリケーション本体
+├── src/
 │   ├── app/                   # Next.js App Router（ページ・API）
 │   ├── lib/                   # ユーティリティ関数
 │   ├── types/                 # 型定義
 │   ├── styles/                # グローバルCSS
 │   └── components/            # UIコンポーネント
 ├── public/                     # 静的ファイル（画像・SVG等）
-├── learning_notes/             # 学習メモ・技術知見
-│   ├── concepts/             # 概念・理論
-│   ├── implementations/      # 実装関連
-│   ├── troubleshooting/      # 問題解決
-│   └── tips/                 # Tips・便利技
-├── docs/                       # プロジェクトドキュメント
-│   ├── features.md           # 機能仕様書
-│   ├── technical-specs.md    # 技術仕様書
-│   ├── database-design.md    # DB設計書
-│   ├── ai-guidelines.md      # AIガイドライン
-│   ├── learning-notes-guide.md # 学習メモ作成ルール
-│   ├── directory-structure.md  # ディレクトリ構成ガイド（このファイル）
-├── package.json                # npmパッケージ管理
-├── tsconfig.json               # TypeScript設定
-├── next.config.ts              # Next.js設定
-├── README.md                   # プロジェクト概要
+├── learning_notes/
+│   ├── concepts/
+│   ├── implementations/
+│   ├── troubleshooting/
+│   └── tips/
+├── docs/
+│   ├── features.md
+│   ├── technical-specs.md
+│   ├── database-design.md
+│   ├── ai-guidelines.md
+│   ├── learning-notes-guide.md
+│   └── directory-structure.md
+├── package.json
+├── tsconfig.json
+├── next.config.ts
+├── README.md
+```
+
+---
+
+## src/app/ 配下の詳細ツリー
+
+```
+src/app/
+├── page.tsx                # ホーム画面（動画リスト表示）
+├── api/
+│   └── youtube/
+│       └── route.ts        # YouTube API連携（API Route）
+└── components/
+    ├── VideoList.tsx       # 動画リストUIコンポーネント
+    └── VideoItem.tsx       # 動画1件表示用コンポーネント
 ```
 
 ---
