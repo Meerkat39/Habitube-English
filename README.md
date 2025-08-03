@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Habitube English
 
-## Getting Started
+英語学習の継続をサポートする、YouTube 動画視聴 × 達成カレンダー Web アプリ（MVP 版）
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 概要
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+YouTube の英語学習チャンネルの最新動画を一覧表示し、視聴記録をカレンダーで可視化することで、毎日の学習習慣を楽しく継続できるサービスです。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+MVP では「お気に入りチャンネルの最新動画取得」「動画リスト表示」「達成カレンダーによる継続可視化」など、最小限の機能に絞って開発しています。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 技術スタック
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js（App Router）
+- TypeScript
+- Tailwind CSS
+- Prisma ORM / SQLite
+- YouTube Data API v3
+- その他：ESLint, Prettier
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 主な機能一覧（MVP）
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- お気に入り YouTube チャンネルの最新動画 5 件を取得・表示
+- 動画タイトル・サムネイル・チャンネル名の一覧 UI
+- サムネイルクリックで YouTube 再生（新規タブ）
+- 視聴記録を DB 保存し、達成カレンダーで可視化
+- 月ごとの達成日数集計・履歴表示
+- レスポンシブ対応（PC・モバイル）
+- ローディング・エラーハンドリング
