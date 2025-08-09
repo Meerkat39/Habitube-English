@@ -5,7 +5,7 @@
 
 import AchievementButton from "./components/AchievementButton";
 import AchievementCalendar from "./components/AchievementCalendar";
-import { useWatchedVideoList } from "./hooks/useWatchedVideoList";
+import { useAchievementList } from "./hooks/useAchievementList";
 
 // ホーム画面（動画リスト表示）
 // - YouTube APIから動画データを取得し、VideoListコンポーネントで一覧表示
@@ -26,12 +26,12 @@ export default function Home() {
   const [error, setError] = useState("");
   const [month, setMonth] = useState("2025-08");
 
-  // --- 履歴データ（APIから取得） ---
+  // --- 達成履歴データ（APIから取得） ---
   const {
-    data: watchedRecords,
+    data: achievementRecords,
     loading: recordsLoading,
     error: recordsError,
-  } = useWatchedVideoList(month);
+  } = useAchievementList(month);
 
   // --- 今日の日付（YYYY-MM-DD） ---
   const todayStr = (() => {
@@ -43,12 +43,10 @@ export default function Home() {
   })();
 
   // --- 今日の達成済み判定 ---
-  // watchedRecords（今月の達成履歴）の中に、今日の日付（todayStr）と一致する記録が1つでもあれば true
-  // 例: r.watchedAt = "2025-08-08T12:34:56Z" → r.watchedAt.slice(0, 10) = "2025-08-08"
+  // achievementRecords（今月の達成履歴）の中に、今日の日付（todayStr）と一致する記録が1つでもあれば true
+  // 例: r.date = "2025-08-08" → todayStr = "2025-08-08"
   // つまり「今日達成済みなら true、未達成なら false」
-  const isTodayAchieved = watchedRecords?.some(
-    (r) => r.watchedAt.slice(0, 10) === todayStr
-  );
+  const isTodayAchieved = achievementRecords?.some((r) => r.date === todayStr);
 
   // 達成ボタン押下時の処理（API連携）
   const handleAchieveToday = async () => {
@@ -136,7 +134,7 @@ export default function Home() {
       ) : (
         <AchievementCalendar
           month={month}
-          records={watchedRecords ?? []}
+          records={achievementRecords ?? []}
           onPrevMonth={handlePrevMonth}
           onNextMonth={handleNextMonth}
         />

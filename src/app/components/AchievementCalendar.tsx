@@ -1,15 +1,15 @@
-import type { WatchedVideo } from "../../types/watchedVideo";
+import type { Achievement } from "../../types/achievement";
 
 // 達成カレンダーUIコンポーネント
 // layouts/image.html のデザインを参考に、月ごとの達成日を色分け表示
 // props:
 //   month: 表示する年月（"2025-08"）
-//   records: 達成履歴（WatchedVideo[]）
+//   records: 達成履歴（Achievement[]）
 //   onPrevMonth/onNextMonth: 月切替ボタンのコールバック
 
 type Props = {
   month: string; // 表示する年月（"2025-08"）
-  records: WatchedVideo[]; // 達成履歴（DBから取得したもの）
+  records: Achievement[]; // 達成履歴（DBから取得したもの）
   onPrevMonth?: () => void; // 前月ボタン押下時の処理
   onNextMonth?: () => void; // 翌月ボタン押下時の処理
 };
@@ -44,7 +44,7 @@ export default function AchievementCalendar({
   const daysInMonth = getDaysInMonth(year, monthNum - 1);
 
   // 達成日（YYYY-MM-DD形式）をSetで管理（高速判定用）
-  const achievedSet = new Set(records.map((r) => r.watchedAt.slice(0, 10)));
+  const achievedSet = new Set(records.map((r) => r.date));
 
   // 月初の曜日（0:日曜〜6:土曜）
   const firstDay = new Date(year, monthNum - 1, 1).getDay();
