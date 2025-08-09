@@ -20,3 +20,10 @@ model WatchedVideo {
 
   @@map("watched_videos")
 }
+
+model Achievement {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  date      String // YYYY-MM-DD
+  createdAt DateTime @default(now())
+}
