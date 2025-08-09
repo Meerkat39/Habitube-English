@@ -54,7 +54,6 @@ export default function Home() {
   // --- 達成履歴データ（APIから取得） ---
   const {
     data: achievementRecords,
-    loading: recordsLoading,
     error: recordsError,
     refresh: refreshAchievementRecords,
   } = useAchievementList(month);
