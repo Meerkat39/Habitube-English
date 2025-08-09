@@ -31,7 +31,20 @@ export default function Home() {
     data: achievementRecords,
     loading: recordsLoading,
     error: recordsError,
+    refresh: refreshAchievementRecords,
   } = useAchievementList(month);
+
+  // 今日の月（YYYY-MM）
+  const todayMonth = (() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}`;
+  })();
+
+  // 今日の月の履歴データ（ボタン判定用）
+  const { data: todayRecords } = useAchievementList(todayMonth);
 
   // --- 今日の日付（YYYY-MM-DD） ---
   const todayStr = (() => {
@@ -43,10 +56,8 @@ export default function Home() {
   })();
 
   // --- 今日の達成済み判定 ---
-  // achievementRecords（今月の達成履歴）の中に、今日の日付（todayStr）と一致する記録が1つでもあれば true
-  // 例: r.date = "2025-08-08" → todayStr = "2025-08-08"
-  // つまり「今日達成済みなら true、未達成なら false」
-  const isTodayAchieved = achievementRecords?.some((r) => r.date === todayStr);
+  // 今日の月の履歴データに今日の日付が含まれていれば true
+  const isTodayAchieved = todayRecords?.some((r) => r.date === todayStr);
 
   // 達成ボタン押下時の処理（API連携）
   const handleAchieveToday = async () => {
@@ -61,9 +72,8 @@ export default function Home() {
         alert(result.error || "達成記録の登録に失敗しました");
         return;
       }
-      // 登録成功時は履歴データを再取得（useWatchedVideoListのリフレッシュ）
-      // → 今の実装では自動反映されない場合、月を一度setし直すことで再取得可能
-      setMonth((prev) => prev); // ダミーでsetMonth呼び出し（useWatchedVideoList再実行）
+      // 登録成功時は履歴データを即時再取得
+      refreshAchievementRecords();
     } catch (e) {
       console.error("達成記録の登録に失敗:", e);
       alert("通信エラーが発生しました");

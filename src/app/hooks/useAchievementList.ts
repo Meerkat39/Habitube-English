@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchAchievementList } from "../../lib/achievementApi";
 import type { AchievementListResponse } from "../../types/achievement";
 
@@ -18,7 +18,8 @@ export function useAchievementList(month: string) {
   // error: 失敗時のエラーメッセージ
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  // 履歴再取得用の関数（useCallbackで依存関係を安定化）
+  const fetchData = React.useCallback(() => {
     setLoading(true);
     setError(null);
     fetchAchievementList(month)
@@ -27,5 +28,10 @@ export function useAchievementList(month: string) {
       .finally(() => setLoading(false));
   }, [month]);
 
-  return { data, loading, error };
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // 外部から履歴再取得をトリガーできるrefresh関数を返す
+  return { data, loading, error, refresh: fetchData };
 }
