@@ -179,13 +179,6 @@ export default function Home() {
         )}
       </div>
 
-      {/* 履歴データ取得中表示 */}
-      {recordsLoading && (
-        <div className="text-center text-gray-500 my-2">
-          履歴データ取得中...
-        </div>
-      )}
-
       <VideoList videos={videos} />
     </main>
   );

@@ -26,4 +26,6 @@ model Achievement {
   userId    Int
   date      String // YYYY-MM-DD
   createdAt DateTime @default(now())
+
+  @@unique([userId, date])
 }

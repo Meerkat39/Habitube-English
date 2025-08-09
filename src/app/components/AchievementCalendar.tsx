@@ -62,10 +62,18 @@ export default function AchievementCalendar({
   for (let i = 0; i < firstDay; i++) {
     // 前月末日の日付（例: 27, 28, ...）
     const day = prevMonthLastDay - firstDay + 1 + i;
+    // 前月末日の日付文字列（YYYY-MM-DD）
+    const prevDateStr = `${prevMonthYear}-${String(prevMonthNum).padStart(
+      2,
+      "0"
+    )}-${String(day).padStart(2, "0")}`;
+    const prevAchieved = recordsPrevMonth.some((r) => r.date === prevDateStr);
     dayCells.push(
       <div
         key={`empty-${i}`}
-        className="w-10 h-10 border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center text-sm font-medium"
+        className={`w-10 h-10 border border-gray-200 flex items-center justify-center text-sm font-medium ${
+          prevAchieved ? "bg-blue-400 text-white" : "bg-gray-100 text-gray-400"
+        }`}
         style={{ borderRadius: "0.5rem" }}
       >
         {day}
@@ -96,13 +104,24 @@ export default function AchievementCalendar({
   const lastDayOfWeek = new Date(year, monthNum - 1, daysInMonth).getDay();
   const endEmptyCount = 6 - lastDayOfWeek;
   for (let i = 0; i < endEmptyCount; i++) {
+    // 翌月初日の日付文字列（YYYY-MM-DD）
+    const nextMonthNum = monthNum + 1 > 12 ? 1 : monthNum + 1;
+    const nextMonthYear = monthNum + 1 > 12 ? year + 1 : year;
+    const nextDay = i + 1;
+    const nextDateStr = `${nextMonthYear}-${String(nextMonthNum).padStart(
+      2,
+      "0"
+    )}-${String(nextDay).padStart(2, "0")}`;
+    const nextAchieved = recordsNextMonth.some((r) => r.date === nextDateStr);
     dayCells.push(
       <div
         key={`end-empty-${i}`}
-        className="w-10 h-10 border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center text-sm font-medium"
+        className={`w-10 h-10 border border-gray-200 flex items-center justify-center text-sm font-medium ${
+          nextAchieved ? "bg-blue-400 text-white" : "bg-gray-100 text-gray-400"
+        }`}
         style={{ borderRadius: "0.5rem" }}
       >
-        {i + 1}
+        {nextDay}
       </div>
     );
   }
