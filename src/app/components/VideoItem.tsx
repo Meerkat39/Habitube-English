@@ -35,10 +35,17 @@ export default function VideoItem({ video }: VideoItemProps) {
         />
       </a>
       <div className="p-4">
-        {/* 動画タイトル */}
-        <h3 className="text-lg font-semibold text-indigo-700 mb-1 truncate">
-          {video.title}
-        </h3>
+        {/* 動画タイトル（YouTube動画ページへのリンク） */}
+        <a
+          href={`https://www.youtube.com/watch?v=${video.videoId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+        >
+          <h3 className="text-lg font-semibold text-indigo-700 mb-1 truncate hover:underline">
+            {video.title}
+          </h3>
+        </a>
         {/* チャンネル名 */}
         <p className="text-sm text-gray-500 mb-1">{video.channelTitle}</p>
         {/* 公開日・長さ・再生数（日本語表記） */}

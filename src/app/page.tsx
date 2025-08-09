@@ -20,11 +20,36 @@ import Loading from "./components/Loading";
 import VideoList from "./components/VideoList";
 
 export default function Home() {
+  // 前月・翌月の年月（YYYY-MM）を算出
+  const getPrevMonth = (month: string) => {
+    const [y, m] = month.split("-").map(Number);
+    const prev = new Date(y, m - 2, 1);
+    return `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}`;
+  };
+  const getNextMonth = (month: string) => {
+    const [y, m] = month.split("-").map(Number);
+    const next = new Date(y, m, 1);
+    return `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}`;
+  };
+
   // --- 動画リスト・画面状態管理 ---
   const [videos, setVideos] = useState<YoutubeVideo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [month, setMonth] = useState("2025-08");
+
+  const prevMonth = getPrevMonth(month);
+  const nextMonth = getNextMonth(month);
+
+  // 前月・翌月の履歴も取得
+  const { data: recordsPrevMonth } = useAchievementList(prevMonth);
+  const { data: recordsNextMonth } = useAchievementList(nextMonth);
 
   // --- 達成履歴データ（APIから取得） ---
   const {
@@ -133,22 +158,26 @@ export default function Home() {
         onAchieve={handleAchieveToday}
       />
 
-      {/* 履歴取得エラー時はカレンダーUIを非表示にし、エラーメッセージのみ表示 */}
-      {recordsError ? (
-        <div className="text-center text-red-500 my-4 flex items-center justify-center gap-2">
-          <span aria-label="error" role="img">
-            ❌
-          </span>
-          {recordsError}
-        </div>
-      ) : (
-        <AchievementCalendar
-          month={month}
-          records={achievementRecords ?? []}
-          onPrevMonth={handlePrevMonth}
-          onNextMonth={handleNextMonth}
-        />
-      )}
+      {/* カレンダー表示領域の高さを外側で固定 */}
+      <div style={{ minHeight: "420px" }}>
+        {recordsError ? (
+          <div className="text-center text-red-500 my-4 flex items-center justify-center gap-2">
+            <span aria-label="error" role="img">
+              ❌
+            </span>
+            {recordsError}
+          </div>
+        ) : (
+          <AchievementCalendar
+            month={month}
+            records={achievementRecords ?? []}
+            recordsPrevMonth={recordsPrevMonth ?? []}
+            recordsNextMonth={recordsNextMonth ?? []}
+            onPrevMonth={handlePrevMonth}
+            onNextMonth={handleNextMonth}
+          />
+        )}
+      </div>
 
       {/* 履歴データ取得中表示 */}
       {recordsLoading && (

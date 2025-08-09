@@ -10,6 +10,8 @@ import type { Achievement } from "../../types/achievement";
 type Props = {
   month: string; // 表示する年月（"2025-08"）
   records: Achievement[]; // 達成履歴（DBから取得したもの）
+  recordsPrevMonth?: Achievement[]; // 前月の達成履歴
+  recordsNextMonth?: Achievement[]; // 翌月の達成履歴
   onPrevMonth?: () => void; // 前月ボタン押下時の処理
   onNextMonth?: () => void; // 翌月ボタン押下時の処理
 };
@@ -35,6 +37,8 @@ function isToday(year: number, month: number, day: number) {
 export default function AchievementCalendar({
   month,
   records,
+  recordsPrevMonth = [],
+  recordsNextMonth = [],
   onPrevMonth,
   onNextMonth,
 }: Props) {
@@ -51,24 +55,29 @@ export default function AchievementCalendar({
 
   // 日セル配列（カレンダーのマス目）
   const dayCells = [];
-  // 月初まで空セルを追加
+  // 月初まで空セルを追加（前月末日を灰色で表示）
+  const prevMonthNum = monthNum - 1 === 0 ? 12 : monthNum - 1;
+  const prevMonthYear = monthNum - 1 === 0 ? year - 1 : year;
+  const prevMonthLastDay = getDaysInMonth(prevMonthYear, prevMonthNum - 1);
   for (let i = 0; i < firstDay; i++) {
+    // 前月末日の日付（例: 27, 28, ...）
+    const day = prevMonthLastDay - firstDay + 1 + i;
     dayCells.push(
       <div
         key={`empty-${i}`}
-        className="w-10 h-10 border border-gray-200 bg-gray-50"
-      ></div>
+        className="w-10 h-10 border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center text-sm font-medium"
+        style={{ borderRadius: "0.5rem" }}
+      >
+        {day}
+      </div>
     );
   }
   // 各日付セルを生成
   for (let d = 1; d <= daysInMonth; d++) {
-    // YYYY-MM-DD形式の文字列
     const dateStr = `${year}-${String(monthNum).padStart(2, "0")}-${String(
       d
     ).padStart(2, "0")}`;
-    // 達成日かどうか
     const achieved = achievedSet.has(dateStr);
-    // 今日かどうか
     const today = isToday(year, monthNum - 1, d);
     dayCells.push(
       <div
@@ -80,6 +89,20 @@ export default function AchievementCalendar({
         style={{ borderRadius: "0.5rem" }}
       >
         {d}
+      </div>
+    );
+  }
+  // 月末の空欄セル（翌月初日を灰色で表示）
+  const lastDayOfWeek = new Date(year, monthNum - 1, daysInMonth).getDay();
+  const endEmptyCount = 6 - lastDayOfWeek;
+  for (let i = 0; i < endEmptyCount; i++) {
+    dayCells.push(
+      <div
+        key={`end-empty-${i}`}
+        className="w-10 h-10 border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center text-sm font-medium"
+        style={{ borderRadius: "0.5rem" }}
+      >
+        {i + 1}
       </div>
     );
   }
