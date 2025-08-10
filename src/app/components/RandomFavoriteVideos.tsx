@@ -10,8 +10,10 @@ export default function RandomFavoriteVideos() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  // APIから動画取得する関数
+  const fetchVideos = () => {
     setLoading(true);
+    setError(null);
     fetch("/api/random-favorite-videos")
       .then((res) => res.json())
       .then((data) => {
@@ -22,18 +24,32 @@ export default function RandomFavoriteVideos() {
         setError("動画の取得に失敗しました");
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchVideos();
   }, []);
 
-  if (loading) return <div>動画取得中...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
-
   return (
-    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
-      {videos.map((video) => (
-        <li key={video.videoId}>
-          <VideoItem video={video} />
-        </li>
-      ))}
-    </ul>
+    <div>
+      <div className="mb-4 flex justify-end">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+          disabled={loading}
+          onClick={fetchVideos}
+        >
+          {loading ? "取得中..." : "もう一度ランダム表示"}
+        </button>
+      </div>
+      {loading && <div>動画取得中...</div>}
+      {error && <div className="text-red-500 mb-2">{error}</div>}
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
+        {videos.map((video) => (
+          <li key={video.videoId}>
+            <VideoItem video={video} />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
