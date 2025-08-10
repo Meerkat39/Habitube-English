@@ -18,7 +18,7 @@ import { parseYoutubeApiResponse } from "../lib/youtube";
 import { YoutubeVideo } from "../types/youtube";
 import ErrorMessage from "./components/ErrorMessage";
 import Loading from "./components/Loading";
-import VideoList from "./components/VideoList";
+import RandomFavoriteVideos from "./components/RandomFavoriteVideos";
 
 export default function Home() {
   // 前月・翌月の年月（YYYY-MM）を算出
@@ -184,7 +184,7 @@ export default function Home() {
         <FavoriteChannelManager />
       </div>
 
-      <VideoList videos={videos} />
+      <RandomFavoriteVideos />
     </main>
   );
 }
