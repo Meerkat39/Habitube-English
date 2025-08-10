@@ -5,6 +5,7 @@
 
 import AchievementButton from "./components/AchievementButton";
 import AchievementCalendar from "./components/AchievementCalendar";
+import FavoriteChannelManager from "./components/FavoriteChannelManager";
 import { useAchievementList } from "./hooks/useAchievementList";
 
 // ホーム画面（動画リスト表示）
@@ -176,6 +177,11 @@ export default function Home() {
             onNextMonth={handleNextMonth}
           />
         )}
+      </div>
+
+      {/* お気に入りチャンネル管理UI（ダミー表示） */}
+      <div className="mb-8">
+        <FavoriteChannelManager />
       </div>
 
       <VideoList videos={videos} />

@@ -1,0 +1,7 @@
+-- CreateTable
+CREATE TABLE "FavoriteChannel" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "channelId" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" INTEGER NOT NULL
+);

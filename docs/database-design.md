@@ -19,6 +19,15 @@
 │ date: String                │
 │ createdAt: DateTime         │
 └─────────────────────────────┘
+
+┌─────────────────────────────┐
+│      FavoriteChannel        │
+├─────────────────────────────┤
+│ id: Int (PK)                │
+│ channelId: String           │
+│ userId: Int                 │
+│ createdAt: DateTime         │
+└─────────────────────────────┘
 ```
 
 ## 🗄️ Prisma スキーマ設計
@@ -49,6 +58,13 @@ model Achievement {
   date      String   // YYYY-MM-DD
   createdAt DateTime @default(now())
 }
+
+model FavoriteChannel {
+  id        Int      @id @default(autoincrement())
+  channelId String
+  createdAt DateTime @default(now())
+  userId    Int
+}
 ```
 
 ## 📝 テーブル詳細
@@ -69,3 +85,12 @@ model Achievement {
 | userId    | Int      | NOT NULL                 | ユーザー ID（MVP は仮） |
 | date      | String   | NOT NULL                 | 達成日（YYYY-MM-DD）    |
 | createdAt | DateTime | NOT NULL, DEFAULT(now()) | 記録作成日時            |
+
+### FavoriteChannel
+
+| カラム名  | データ型 | 制約                     | 説明                    |
+| --------- | -------- | ------------------------ | ----------------------- |
+| id        | Int      | PK, AUTO_INCREMENT       | プライマリキー          |
+| channelId | String   | NOT NULL                 | YouTube チャンネル ID   |
+| userId    | Int      | NOT NULL                 | ユーザー ID（MVP は仮） |
+| createdAt | DateTime | NOT NULL, DEFAULT(now()) | 登録日時                |

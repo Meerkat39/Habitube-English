@@ -29,3 +29,10 @@ model Achievement {
 
   @@unique([userId, date])
 }
+
+model FavoriteChannel {
+  id        Int      @id @default(autoincrement())
+  channelId String
+  createdAt DateTime @default(now())
+  userId    Int
+}
