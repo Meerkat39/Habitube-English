@@ -1,3 +1,5 @@
+import ErrorMessage from "@/app/components/ErrorMessage";
+import Loading from "@/app/components/Loading";
 import type { YoutubeVideo } from "@/types/youtube";
 import { useEffect, useState } from "react";
 import VideoItem from "./VideoItem";
@@ -41,8 +43,8 @@ export default function RandomFavoriteVideos() {
           {loading ? "取得中..." : "もう一度ランダム表示"}
         </button>
       </div>
-      {loading && <div>動画取得中...</div>}
-      {error && <div className="text-red-500 mb-2">{error}</div>}
+      {loading && <Loading />}
+      {error && <ErrorMessage message={error} />}
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
         {videos.map((video) => (
           <li key={video.videoId}>

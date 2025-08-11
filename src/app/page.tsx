@@ -5,7 +5,6 @@
 
 import AchievementButton from "./components/AchievementButton";
 import AchievementCalendar from "./components/AchievementCalendar";
-import FavoriteChannelManager from "./components/FavoriteChannelManager";
 import { useAchievementList } from "./hooks/useAchievementList";
 
 // ホーム画面（動画リスト表示）
@@ -13,14 +12,13 @@ import { useAchievementList } from "./hooks/useAchievementList";
 // - MVP用：ローディング・エラー処理は最低限
 // - 今後UI/UX強化・デザイン調整予定
 
-import { useEffect, useState } from "react";
-import { parseYoutubeApiResponse } from "../lib/youtube";
-import { YoutubeVideo } from "../types/youtube";
-import ErrorMessage from "./components/ErrorMessage";
-import Loading from "./components/Loading";
-import RandomFavoriteVideos from "./components/RandomFavoriteVideos";
+import { useState } from "react";
+import Header from "./components/Header";
+// import RandomFavoriteVideos from "./components/RandomFavoriteVideos";
 
 export default function Home() {
+  // お気に入りチャンネル管理UIの表示状態
+  const [showSettings, setShowSettings] = useState(false);
   // 前月・翌月の年月（YYYY-MM）を算出
   const getPrevMonth = (month: string) => {
     const [y, m] = month.split("-").map(Number);
@@ -39,10 +37,7 @@ export default function Home() {
     )}`;
   };
 
-  // --- 動画リスト・画面状態管理 ---
-  const [videos, setVideos] = useState<YoutubeVideo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  // --- 画面状態管理 ---
   const [month, setMonth] = useState("2025-08");
 
   const prevMonth = getPrevMonth(month);
@@ -121,70 +116,57 @@ export default function Home() {
     );
   };
 
-  useEffect(() => {
-    // YouTube API Route（/api/youtube）から動画データを取得
-    // - 成功時: parseYoutubeApiResponseで型整形し、videosにセット
-    // - 失敗時: エラーメッセージ表示
-    fetch("/api/youtube")
-      .then((res) => res.json())
-      .then((data) => {
-        setVideos(parseYoutubeApiResponse(data));
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("動画データの取得に失敗しました。");
-        setLoading(false);
-      });
-  }, []);
-
   // --- 画面描画・UI ---
-
-  // ローディング中はLoadingコンポーネント表示
-  if (loading) return <Loading />;
-
-  // エラー時はErrorMessageコンポーネント表示
-  if (error) return <ErrorMessage message={error} />;
-
-  // 動画リスト表示（VideoListコンポーネントにデータ渡す）
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1 className="text-3xl font-extrabold text-center text-blue-700 mb-8 tracking-wide drop-shadow-lg">
-        Habitube English
-      </h1>
+    <>
+      <Header onSettingsClick={() => setShowSettings(true)} />
+      <main style={{ padding: "2rem" }}>
+        {/* 今日の達成ボタンUI（コンポーネント化） */}
+        <AchievementButton
+          isAchieved={!!isTodayAchieved}
+          onAchieve={handleAchieveToday}
+        />
 
-      {/* 今日の達成ボタンUI（コンポーネント化） */}
-      <AchievementButton
-        isAchieved={!!isTodayAchieved}
-        onAchieve={handleAchieveToday}
-      />
+        {/* カレンダー表示領域の高さを外側で固定 */}
+        <div style={{ minHeight: "420px" }}>
+          {recordsError ? (
+            <div className="text-center text-red-500 my-4 flex items-center justify-center gap-2">
+              <span aria-label="error" role="img">
+                ❌
+              </span>
+              {recordsError}
+            </div>
+          ) : (
+            <AchievementCalendar
+              month={month}
+              records={achievementRecords ?? []}
+              recordsPrevMonth={recordsPrevMonth ?? []}
+              recordsNextMonth={recordsNextMonth ?? []}
+              onPrevMonth={handlePrevMonth}
+              onNextMonth={handleNextMonth}
+            />
+          )}
+        </div>
 
-      {/* カレンダー表示領域の高さを外側で固定 */}
-      <div style={{ minHeight: "420px" }}>
-        {recordsError ? (
-          <div className="text-center text-red-500 my-4 flex items-center justify-center gap-2">
-            <span aria-label="error" role="img">
-              ❌
-            </span>
-            {recordsError}
+        {/* お気に入りチャンネル管理UI（モーダル表示） */}
+        {showSettings && (
+          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+            <div className="bg-white rounded shadow-lg p-6 min-w-[320px] relative">
+              <button
+                className="absolute top-2 right-2 text-gray-500 hover:text-red-600 font-bold text-3xl w-10 h-10 flex items-center justify-center transition-colors duration-150"
+                onClick={() => setShowSettings(false)}
+                aria-label="閉じる"
+                style={{ lineHeight: 1 }}
+              >
+                ×
+              </button>
+              {/* <FavoriteChannelManager /> */}
+            </div>
           </div>
-        ) : (
-          <AchievementCalendar
-            month={month}
-            records={achievementRecords ?? []}
-            recordsPrevMonth={recordsPrevMonth ?? []}
-            recordsNextMonth={recordsNextMonth ?? []}
-            onPrevMonth={handlePrevMonth}
-            onNextMonth={handleNextMonth}
-          />
         )}
-      </div>
 
-      {/* お気に入りチャンネル管理UI（ダミー表示） */}
-      <div className="mb-8">
-        <FavoriteChannelManager />
-      </div>
-
-      <RandomFavoriteVideos />
-    </main>
+        {/* <RandomFavoriteVideos /> */}
+      </main>
+    </>
   );
 }
