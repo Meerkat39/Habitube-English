@@ -64,7 +64,8 @@ export default function Home() {
   })();
 
   // 今日の月の履歴データ（ボタン判定用）
-  const { data: todayRecords } = useAchievementList(todayMonth);
+  const { data: todayRecords, refresh: refreshTodayRecords } =
+    useAchievementList(todayMonth);
 
   // --- 今日の日付（YYYY-MM-DD） ---
   const todayStr = (() => {
@@ -92,8 +93,9 @@ export default function Home() {
         alert(result.error || "達成記録の登録に失敗しました");
         return;
       }
-      // 登録成功時は履歴データを即時再取得
+      // 登録成功時は履歴データを即時再取得（今日分も再取得）
       refreshAchievementRecords();
+      refreshTodayRecords();
     } catch (e) {
       console.error("達成記録の登録に失敗:", e);
       alert("通信エラーが発生しました");
