@@ -49,4 +49,4 @@ YouTube の英語学習チャンネルの最新動画を一覧表示し、視聴
 - お気に入りのチャンネルを自由に追加・削除
 - チャンネルリストの編集はモーダル UI で直感的に操作
 
-<img src="public/imgs/screenshot_favorite_channel_manager.png" alt="お気に入りのチャンネル管理画面" style="max-width: 400px; height: auto;" />
+<img src="public/imgs/screenshot_favorite_channel_manager.png" alt="お気に入りのチャンネル管理画面" style="max-width: 250px; height: auto;" />
