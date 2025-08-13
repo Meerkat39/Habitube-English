@@ -16,7 +16,7 @@ YouTube の英語学習チャンネルの最新動画を一覧表示し、視聴
 | ----------------- | ------------------------------------------------------------------------------ |
 | フロントエンド    | Next.js (App Router) v15.4.5 / React v19.1.0 / TypeScript v5 / Tailwind CSS v4 |
 | バックエンド      | Next.js API Routes v15.4.5 / TypeScript v5                                     |
-| データベース      | SQLite                                                                         |
+| データベース      | SQLite v3.46.0                                                                         |
 | ORM               | Prisma v6.13.0                                                                 |
 | 開発支援          | GitHub Copilot                                                                 |
 | 外部サービス・API | YouTube Data API v3                                                            |
