@@ -19,7 +19,7 @@ export async function fetchFavoriteChannels(
 export async function fetchVideosFromChannel(
   channelId: string,
   apiKey: string,
-  maxResults = 20
+  maxResults = 5
 ): Promise<YoutubeVideo[]> {
   const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=${maxResults}&type=video`;
   try {

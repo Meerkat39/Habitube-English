@@ -24,7 +24,7 @@ export async function GET() {
   // 2. 各チャンネルから最新動画ID一覧を取得
   let allVideoIds: string[] = [];
   for (const channelId of channelIds) {
-    const videos = await fetchVideosFromChannel(channelId, apiKey!, 20);
+    const videos = await fetchVideosFromChannel(channelId, apiKey!, 1);
     allVideoIds = allVideoIds.concat(videos.map((v) => v.videoId));
   }
 

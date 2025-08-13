@@ -13,7 +13,9 @@ import { useAchievementList } from "./hooks/useAchievementList";
 // - 今後UI/UX強化・デザイン調整予定
 
 import { useState } from "react";
+import FavoriteChannelManager from "./components/FavoriteChannelManager";
 import Header from "./components/Header";
+import RandomFavoriteVideos from "./components/RandomFavoriteVideos";
 // import RandomFavoriteVideos from "./components/RandomFavoriteVideos";
 
 export default function Home() {
@@ -162,12 +164,12 @@ export default function Home() {
               >
                 ×
               </button>
-              {/* <FavoriteChannelManager /> */}
+              <FavoriteChannelManager />
             </div>
           </div>
         )}
 
-        {/* <RandomFavoriteVideos /> */}
+        <RandomFavoriteVideos />
       </main>
     </>
   );
