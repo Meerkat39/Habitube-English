@@ -14,7 +14,7 @@ YouTube の英語学習チャンネルの最新動画を一覧表示し、視聴
 
 | カテゴリ          | 技術・サービス                                                  |
 | ----------------- | ------------------------------------------------------------------------------ |
-| フロントエンド    | Next.js (App Router) v15.4.5 / React v19.1.0 / TypeScript v5 / Tailwind CSS v4 |
+| フロントエンド    | Next.js v15.4.5 / React v19.1.0 / TypeScript v5 / Tailwind CSS v4 |
 | バックエンド      | Next.js API Routes v15.4.5 / TypeScript v5                                     |
 | データベース      | SQLite v3.46.0                                                                         |
 | ORM               | Prisma v6.13.0                                                                 |
@@ -25,11 +25,10 @@ YouTube の英語学習チャンネルの最新動画を一覧表示し、視聴
 
 ## 主な機能
 
-### 視聴記録の保存と達成カレンダー表示
+### カレンダー表示による学習の可視化
 
-- 視聴した動画をワンクリックで記録
+- ボタンをクリックし、達成を記録
 - 月ごとの達成状況をカレンダーで可視化
-- 達成日数の集計や履歴も確認可能
 
 <div style="display: flex; justify-content: space-between;">
   <img src="public/imgs/screenshot_calendar_1.png" alt="達成カレンダー画面1" style="width: 45%;" />
@@ -38,15 +37,15 @@ YouTube の英語学習チャンネルの最新動画を一覧表示し、視聴
 
 ### お気に入り英語 YouTube チャンネルの最新動画取得
 
-- 登録したチャンネルの最新動画を自動取得し、一覧表示
-- タイトル・サムネイル・チャンネル名を分かりやすく表示
-- サムネイルクリックで YouTube 動画を新規タブで再生
+- お気に入り登録したチャンネルの最新動画の自動取得
+- タイトル・サムネイル・チャンネル名を表示
+- タイトル・サムネイルをクリックすることで YouTube 動画を新規タブで再生
 
 ![動画リスト画面](public/imgs/screenshot_videos_list.png)
 
 ### お気に入りのチャンネルの管理
 
 - お気に入りのチャンネルを自由に追加・削除
-- チャンネルリストの編集はモーダル UI で直感的に操作
+- チャンネルリストの編集はモーダル UI で操作
 
 <img src="public/imgs/screenshot_favorite_channel_manager.png" alt="お気に入りのチャンネル管理画面" style="max-width: 250px; height: auto;" />
